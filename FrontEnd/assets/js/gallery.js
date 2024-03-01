@@ -7,7 +7,7 @@ fetch(url, { method: "GET" })
 
     for (const project of response) {
       let htmlProject = ` 
-          <figure>
+          <figure data-categoryId="${project.category.id}">
             <img src="${project.imageUrl}" alt="${project.title}" />
             <figcaption>${project.title}</figcaption>
           </figure> `;

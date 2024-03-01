@@ -13,15 +13,16 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <script src="/FrontEnd/assets/js/gallery.js" defer></script>
+    <script src="/FrontEnd/assets/js/categories.js" defer></script>
   </head>
   <body>
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
-          <li>projets</li>
+          <a href="/FrontEnd/index.html"><li>projets</li></a>
           <li>contact</li>
-          <li>login</li>
+          <a href="/FrontEnd/assets/login.html"><li>login</li></a>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -29,7 +30,7 @@
     <main>
       <section id="introduction">
         <figure>
-          <img src="./assets/images/sophie-bluel.png" alt="" />
+          <img src="./assets/images/sophie-bluel.png" alt="profile-picture" />
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -52,6 +53,7 @@
       </section>
       <section id="portfolio">
         <h2>Mes Projets</h2>
+        <div id="categories-container"></div>
         <div class="gallery"></div>
       </section>
       <section id="contact">
