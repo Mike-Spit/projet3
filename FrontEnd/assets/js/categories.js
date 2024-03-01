@@ -80,7 +80,6 @@ function showImagesByCategory(categoryId) {
   const allFigures = document.querySelectorAll(
     `figure[data-categoryId="${categoryId}"].hidden`
   );
-
   // Afficher les images correspondant à la catégorie sélectionnée avec une animation d'apparition
   allFigures.forEach((figure) => {
     figure.classList.remove("hidden");
@@ -88,7 +87,7 @@ function showImagesByCategory(categoryId) {
   });
 }
 
-// Fonction pour masquer toutes les images avec une animation de disparition, sauf celles de la catégorie spécifique
+// Fonction pour masquer toutes les images avec une animation de disparition, sauf celles de la catégorie sélectionnée
 function hideAllImages(categoryId) {
   const allFigures = document.querySelectorAll(
     `#portfolio .gallery figure:not([data-categoryId="${categoryId}"])`

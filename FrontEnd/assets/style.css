@@ -237,11 +237,6 @@ li:hover {
   color: white;
 }
 
-#categories-container button.active {
-  background-color: #1d6154;
-  color: white;
-}
-
 .gallery {
   width: 100%;
   display: grid;
