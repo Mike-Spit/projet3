@@ -11,9 +11,12 @@
       rel="stylesheet"
     />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="./assets/style.css" />
-    <script src="/FrontEnd/assets/js/gallery.js" defer></script>
-    <script src="/FrontEnd/assets/js/categories.js" defer></script>
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+    <script
+      src="https://kit.fontawesome.com/aa2c7e9210.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/FrontEnd/assets/js/index.js" defer></script>
   </head>
   <body>
     <header>
@@ -22,7 +25,7 @@
         <ul>
           <a href="/FrontEnd/index.html"><li>projets</li></a>
           <li>contact</li>
-          <a href="/FrontEnd/login.html"><li>login</li></a>
+          <a href="/FrontEnd/login.html" class="btn-login"><li>login</li></a>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -52,7 +55,9 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
+        <div class="title-portfolio">
+          <h2>Mes Projets</h2>
+        </div>
         <div id="categories-container"></div>
         <div class="gallery"></div>
       </section>
@@ -69,6 +74,9 @@
           <input type="submit" value="Envoyer" />
         </form>
       </section>
+      <aside id="modal" aria-hidden="true">
+        <div id="modal-content"></div>
+      </aside>
     </main>
 
     <footer>

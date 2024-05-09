@@ -11,9 +11,8 @@
       rel="stylesheet"
     />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="/FrontEnd/assets/style.css" />
-    <script src="/FrontEnd/assets/js/gallery.js" defer></script>
-    <script src="/FrontEnd/assets/js/categories.js" defer></script>
+    <link rel="stylesheet" href="/FrontEnd/assets/styles/login.css" />
+    <script src="/FrontEnd/assets/js/login.js" defer></script>
   </head>
   <body>
     <header>
@@ -22,7 +21,7 @@
         <ul>
           <a href="/FrontEnd/index.html"><li>projets</li></a>
           <li>contact</li>
-          <a href="/FrontEnd/login.html"><li>login</li></a>
+          <a href="/FrontEnd/login.html" class="btn-login"><li>login</li></a>
           <li>
             <img src="/FrontEnd/assets/icons/instagram.png" alt="Instagram" />
           </li>
@@ -31,17 +30,22 @@
     </header>
 
     <main>
-      <section id="login">
-        <h2>Log In</h2>
-        <form action="/FrontEnd/login.html" method="POST">
-          <label for="username">E-mail</label>
-          <input type="text" id="username" name="username" required />
+      <section class="login" id="login">
+        <h2 class="title-login">Log In</h2>
+        <form
+          id="form-login"
+          action="/FrontEnd/assets/login.html"
+          method="POST"
+        >
+          <label for="email">E-mail</label>
+          <input type="text" id="email" name="email" required />
           <label for="password">Mot de passe</label>
           <input type="password" id="password" name="password" required />
-          <button type="submit">Se connecter</button>
+          <input type="submit" value="Se connecter"></input>
         </form>
-        <a href="#">Mot de passe oublié</a>
+        <a href="#" class="forgot-password">Mot de passe oublié</a>
       </section>
+    </main>
     <footer>
       <nav>
         <ul>

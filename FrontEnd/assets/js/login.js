@@ -1,57 +1,45 @@
-// Fonction pour gérer l'envoi du formulaire
-document.getElementById("login-form").addEventListener("submit", (event) => {
-  event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+// Chargement de la page login.html
+document.addEventListener("DOMContentLoaded", () => {
+  const formLogin = document.querySelector("#form-login");
+  const email = document.querySelector("#email");
+  const password = document.querySelector("#password");
 
-  // Récupérer les valeurs des champs d'entrée
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  // Soumission du formulaire de connexion
+  formLogin.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  // URL de l'API pour la connexion
-  const urlLogin = "http://localhost:5678/api/users/login";
+    // Utilisation de Trim() pour ne pas tenir compte des espaces avant et après les valeurs saisies
+    // Utilisation de ToLowerCase() pour ne pas tenir compte des majuscules dans l'adresse mail
+    const valueEmail = email.value.trim().toLowerCase();
+    const valuePassword = password.value.trim();
 
-  // Effectuer une requête POST pour se connecter
-  fetch(urlLogin, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: email, password: password }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        // Stocker le token d'authentification dans sessionStorage
-        response.json().then((data) => {
-          sessionStorage.setItem("token", data.token);
-          sessionStorage.setItem("isLoggedIn", true);
-          sessionStorage.setItem("email", email);
-
-          // Masquer la partie "catégories" si elle existe
-          const categoriesContainer = document.getElementById(
-            "categories-container"
-          );
-          if (categoriesContainer) {
-            categoriesContainer.style.display = "none";
-          }
-
-          // Changer le bouton "login" en "logout"
-          const loginLink = document.getElementById("login-link");
-          loginLink.textContent = "logout";
-          loginLink.href = "/FrontEnd/logout.html";
-
-          // Redirection vers la page d'accueil après une connexion réussie
-          window.location.href = "/FrontEnd/index.html";
+    // Vérification des champs vides et affichage d'un message d'erreur
+    if (valueEmail === "" || valuePassword === "") {
+      email.value = "";
+      password.value = "";
+      console.log("Veuillez remplir tous les champs !");
+    } else {
+      try {
+        const fetchUser = await fetch("http://localhost:5678/api/users/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: valueEmail, password: valuePassword }),
         });
-      } else if (response.status === 404) {
-        // Afficher un message d'erreur sur la page de login
-        const errorMessage = document.createElement("p");
-        errorMessage.textContent = "Identifiants incorrects";
-        errorMessage.style.color = "red";
-        const form = document.getElementById("login-form");
-        form.insertBefore(errorMessage, form.children[0]);
-      } else {
-        // Gérer les autres erreurs de connexion
-        console.error("Erreur lors de la connexion:", response.status);
+        if (fetchUser.ok) {
+          const user = await fetchUser.json();
+          sessionStorage.setItem("token", user.token);
+          alert("Connecté avec succès !");
+          setTimeout(() => {
+            window.location.href = "/FrontEnd/index.html";
+          }, 3000);
+        } else {
+          email.value = "";
+          password.value = "";
+          alert("🔎 Adresse mail et/ou mot de passe incorrect !");
+        }
+      } catch (error) {
+        alert(`Erreur : ${error}`);
       }
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la connexion:", error);
-    });
+    }
+  });
 });
