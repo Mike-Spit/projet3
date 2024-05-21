@@ -438,6 +438,7 @@ function addImgModalGallery(newWork) {
   elementTrash.classList.add("fa-solid", "fa-trash-can");
   imgModal.src = newWork.imageUrl;
   elementTrash.addEventListener("click", async (event) => {
+    event.preventDefault();
     if (confirm("Voulez-vous vraiment supprimer cette image ?")) {
       try {
         const fetchWorks = await fetch(
