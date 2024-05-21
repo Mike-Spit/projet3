@@ -1,32 +1,42 @@
-// Fonction asynchrone pour récupérer et afficher les projets
-async function fetchAndDisplayProjects() {
+// Fonction async pour appeler les projets
+async function fetchProjects() {
   try {
     const response = await fetch("http://localhost:5678/api/works");
-    const projects = await response.json();
-    const projectContainer = document.querySelector("#portfolio .gallery");
-
-    projects.forEach((project) => {
-      const htmlProject = `
-        <figure data-categoryId="${project.category.id}" class="fade-in">
-          <img src="${project.imageUrl}" alt="${project.title}" />
-          <figcaption>${project.title}</figcaption>
-        </figure>`;
-      projectContainer.insertAdjacentHTML("beforeend", htmlProject);
-    });
+    return await response.json();
   } catch (error) {
     console.error("Erreur lors de la récupération des projets:", error);
   }
 }
 
-// Fonction asynchrone pour récupérer et afficher les catégories
-async function fetchAndDisplayCategories() {
+// Fonction asynchrone pour récupérer et afficher les projets
+async function fetchAndDisplayProjects() {
+  const projectContainer = document.querySelector("#portfolio .gallery");
+  const projects = await fetchProjects();
+
+  projects.forEach((project) => {
+    const htmlProject = `
+        <figure data-categoryId="${project.category.id}" class="fade-in">
+          <img src="${project.imageUrl}" alt="${project.title}" />
+          <figcaption>${project.title}</figcaption>
+        </figure>`;
+    projectContainer.insertAdjacentHTML("beforeend", htmlProject);
+  });
+}
+
+// Fonction async pour appeler les projets
+async function fetchCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories");
-    const categories = await response.json();
-    createCategoryElements(categories);
+    return await response.json();
   } catch (error) {
     console.error("Erreur lors de la récupération des catégories:", error);
   }
+}
+
+// Fonction asynchrone pour récupérer et afficher les catégories
+async function fetchAndDisplayCategories() {
+  const categories = await fetchCategories();
+  createCategoryElements(categories);
 }
 
 // Optimisation de l'affichage par catégorie
@@ -72,7 +82,7 @@ function createCategoryElements(categories) {
     const categoryBtn = document.createElement("button");
     categoryBtn.textContent = category.name;
     categoryBtn.classList.add("category");
-    categoryBtn.dataset.categoryid = category.id.toString(); // Assurez-vous que l'ID est une chaîne
+    categoryBtn.dataset.categoryid = category.id.toString(); // S'assurer que l'ID est une chaîne
     categoryBtn.addEventListener("click", () => {
       showImagesByCategory(category.id);
       setActiveButton(categoryBtn);
@@ -81,7 +91,7 @@ function createCategoryElements(categories) {
   });
 }
 
-// Assurez-vous d'appeler ces fonctions au chargement de la page ou à l'initialisation de votre application
+// Appel des fonctions au chargement de la page
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndDisplayProjects();
   fetchAndDisplayCategories();
@@ -94,7 +104,7 @@ if (token) {
   btnLogin.innerText = "logout";
   btnLogin.style.fontWeight = "700";
   btnLogin.href = "/FrontEnd/index.html";
-  console.log("🟢 Vous êtes connecté avec succès !");
+  console.log("Connexion réussie !");
   displayModeEdit();
   displayModalGallery();
   displayModalAdd();
@@ -118,6 +128,7 @@ function displayModeEdit() {
   btnEdit.innerHTML = `<i class="fa-regular fa-pen-to-square fa-xs"></i> <p>Mode édition</p>`;
   headerEdit.appendChild(btnEdit);
   document.getElementById("categories-container").style.display = "none";
+
   // Ajout d'un bouton pour ouvrir la modal
   const titlePortfolio = document.querySelector(".title-portfolio");
   const modify = document.createElement("a");
@@ -171,7 +182,7 @@ function openAndCloseModal() {
   });
 }
 
-function displayModalGallery() {
+async function displayModalGallery() {
   const modalContent = document.getElementById("modal-content");
   const closeModalContent = document.createElement("i");
   closeModalContent.classList.add(
@@ -192,6 +203,8 @@ function displayModalGallery() {
   modalContent.appendChild(divGallery);
   modalContent.appendChild(bottomLine);
   modalContent.appendChild(btnAddImg);
+
+  const works = await fetchProjects();
 
   works.forEach((work) => {
     const worksId = work.id;
@@ -232,7 +245,7 @@ function displayModalGallery() {
   });
 }
 
-function displayModalAdd() {
+async function displayModalAdd() {
   const modal = document.getElementById("modal");
   const modalContent = document.getElementById("modal-content");
   modalContent.style.display = "none";
@@ -266,6 +279,9 @@ function displayModalAdd() {
   `;
   modal.appendChild(modalAdd);
   const selectCategory = document.getElementById("select-category");
+
+  const categories = await fetchCategories();
+
   categories.forEach((category) => {
     const option = document.createElement("option");
     option.value = category.id;
